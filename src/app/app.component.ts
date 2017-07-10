@@ -13,9 +13,9 @@ import {SamuService} from './services/samu.service'
   providers: [UFService, SamuService]
 })
 export class AppComponent implements OnInit {
-    meu_id = 13;
-    minha_uf: UF;
-    municipios_atendidos: Dados[] = [];
+    uf_id = 13;
+    uf: UF;
+    municipios_atendidos: Dados[];
     media: number;
 
     constructor(private ufService: UFService, private samuService: SamuService)
@@ -24,18 +24,16 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.minha_uf = this.ufService.getById(this.meu_id);
-        this.municipios_atendidos = this.samuService.getPorEstadoMunicipiosAtendidos(this.meu_id);
+        this.uf = this.ufService.getById(this.uf_id);
+        this.municipios_atendidos = this.samuService.getoMunicipiosAtendidosDoEstado(this.uf_id);
         this.media = this.calcularMedia();
     }
 
     calcularMedia(): number {
-      var qnt = 0;
       var total = 0;
       for(let mun of this.municipios_atendidos){
-        qnt++;
         total+=mun.valor;
       }
-      return Math.round(total/qnt);
+      return Math.round(total/this.municipios_atendidos.length);
     }
 }
