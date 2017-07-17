@@ -5,13 +5,11 @@ import { UFs } from './mock-ufs';
 
 @Injectable()
 export class UFService {
-  getAll(): UF[] {
-    return UFs;
+  getAll(): Promise<UF[]> {
+    return Promise.resolve(UFs);
   }
 
-  getById(id: number): UF {
-    for(let uf of UFs){
-      if(uf.id == id) return uf;
-    }
+  getPorId(id: number): Promise<UF> {
+    return this.getAll().then(ufs => ufs.find(uf => uf.id === id));
   }
 }

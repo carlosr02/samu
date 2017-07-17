@@ -1,20 +1,30 @@
 import { Injectable } from '@angular/core';
 
+import { UF } from '../types/uf';
 import { Dados } from '../types/samu';
 import { VALORES } from './mock-samu_municipios_atendidos_por_estado';
 
 @Injectable()
 export class SamuService {
 
-  getAllMunicipiosAtendidosPorEstado(): Dados[] {
-    return VALORES;
+  getAllMunicipiosAtendidosPorEstado(): Promise<Dados[]> {
+    return Promise.resolve(VALORES);
   }
 
-  getoMunicipiosAtendidosDoEstado(uf_id: number): Dados[] {
-    var municipios_atendidos: Dados[] = [];
+  getPorUFMunicipiosAtendidosPorEstado(uf: UF): Promise<Dados[]> {
+    return this.getAllMunicipiosAtendidosPorEstado()
+        .then(municipios => municipios.filter(mun => mun.uf_id === uf.id));
+  }
+
+  calcularMedia(uf: UF): number {
+    var total = 0;
+    var qnt = 0;
     for(let mun of VALORES){
-      if(mun.uf_id == uf_id) municipios_atendidos.push(mun);
+      if(mun.uf_id === uf.id) {
+        total+=mun.valor;
+        qnt++;
+      }
     }
-    return municipios_atendidos;
+    return Math.round(total/qnt);
   }
 }
