@@ -5,11 +5,11 @@ import { Dados } from '../types/samu';
 import { SamuService } from '../services/samu.service';
 
 @Component({
-  selector: 'samu-dados',
-  templateUrl: './samu.component.html',
-  styleUrls: ['./samu.component.css']
+  selector: 'todos_dados',
+  templateUrl: './todos_dados.component.html',
+  styleUrls: ['./todos_dados.component.css']
 })
-export class SamuComponent implements OnInit {
+export class TodosDadosComponent implements OnInit {
   municipios: Dados[];
 
   constructor(private samuService: SamuService, private location: Location) { }

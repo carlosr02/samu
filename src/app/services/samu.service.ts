@@ -15,17 +15,4 @@ export class SamuService {
     return this.getAllMunicipiosAtendidosPorEstado()
         .then(municipios => municipios.filter(mun => mun.uf_id === uf.id));
   }
-
-  calcularMedia(uf: UF): Promise<number> {
-    var total = 0;
-    var qnt = 0;
-    return this.getPorUFMunicipiosAtendidosPorEstado(uf)
-      .then(municipios => municipios.forEach(function(obj){
-        total+=obj.valor;
-        qnt++;
-      }))
-      .then(function(){
-        return Math.round(total/qnt);
-      });
-  }
 }
