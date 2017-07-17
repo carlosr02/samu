@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { UF } from '../types/uf';
 import { UFService } from '../services/uf.service';
 
 import { Dados } from '../types/samu';
@@ -15,7 +14,6 @@ import { SamuService } from '../services/samu.service';
   styleUrls: ['./uf-municipios.component.css']
 })
 export class MunicipiosComponent implements OnInit {
-  uf: UF;
   municipios_atendidos: Dados[];
 
   constructor(private route: ActivatedRoute, private location: Location,
@@ -24,8 +22,8 @@ export class MunicipiosComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap
       .switchMap((params: ParamMap) => this.ufService.getPorId(+params.get('id')))
-      .subscribe(uf => this.uf = uf);
-    this.samuService.getPorUFMunicipiosAtendidosPorEstado(this.uf).then(municipios => this.municipios_atendidos = municipios)
+      .subscribe(uf => this.samuService.getPorUFMunicipiosAtendidosPorEstado(uf).
+        then(municipios => this.municipios_atendidos = municipios));
   }
 
   goBack(): void {
