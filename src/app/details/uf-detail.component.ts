@@ -23,8 +23,10 @@ export class UFDetailComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap
       .switchMap((params: ParamMap) => this.ufService.getPorId(+params.get('id')))
-      .subscribe(uf => this.uf = uf);
-    this.media = this.samuService.calcularMedia(this.uf);
+      .subscribe(uf => {
+        this.uf = uf;
+        this.samuService.calcularMedia(uf).then(media => this.media = media);
+      });
   }
 
   goBack(): void {
