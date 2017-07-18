@@ -18,9 +18,9 @@ export class DadosComponent implements OnInit {
     private location: Location) { }
 
   ngOnInit(): void {
-    this.ufService.getPorId(11)
-      .then(uf => this.samuService.getPorUFMunicipiosAtendidosPorEstado(uf)
-      .then(municipios => this.municipios_atendidos = municipios));
+    this.ufService.getPorId(13)
+      .then(uf => this.samuService.getPorUFMunicipiosAtendidosPorEstado(uf))
+      .then(municipios => this.municipios_atendidos = municipios);
   }
 
   goBack(): void {

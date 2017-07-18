@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UF } from '../types/uf';
 import { UFService } from '../services/uf.service';
 
+import {Dados} from '../types/samu';
 import { SamuService } from '../services/samu.service';
 
 @Component({
@@ -21,22 +22,17 @@ export class ResumoComponent implements OnInit {
   ngOnInit(): void {
     this.ufService.getPorId(13)
       .then(uf => this.uf = uf)
-      .then(function(uf){
-        this.media = this.calcularMedia(uf)});
+      .then(uf => this.samuService.getPorUFMunicipiosAtendidosPorEstado(uf))
+      .then(dados => this.media = this.calcularMedia(dados));
   }
 
   verDados(): void {
     this.router.navigate(['/dados']);
   }
 
-  calcularMedia(uf: UF): number {
+  calcularMedia(dados: Dados[]): number {
     var total = 0;
-    var qnt = 0;
-    this.samuService.getPorUFMunicipiosAtendidosPorEstado(uf)
-      .then(municipios => municipios.forEach(function(obj) {
-        total+=obj.valor;
-        qnt++;
-      }));
-    return Math.round(total/qnt);
+    dados.forEach(item => total += item.valor);
+    return total / dados.length;
   }
 }
