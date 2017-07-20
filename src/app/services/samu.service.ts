@@ -24,13 +24,14 @@ export class SamuService {
 
   getAllMunicipiosAtendidosPorEstadoComNome(): Promise<Atendimentos[]> {
     let atendimentos: Atendimentos[] = [];
+    let unidade_federativa: UF;
 
     this.getAllMunicipiosAtendidosPorEstado()
       .then(municipios => municipios
         .forEach(municipio => atendimentos.push(
           new Atendimentos(
             municipio.valor,
-            this.ufService.getPorId(municipio.uf_id).then(uf => uf),
+            this.ufService.getPorId(municipio.uf_id),
             municipio.ano
           ))));
 
