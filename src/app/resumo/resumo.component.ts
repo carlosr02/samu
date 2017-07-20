@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { UF } from '../types/uf';
 import { UFService } from '../services/uf.service';
@@ -16,18 +15,13 @@ export class ResumoComponent implements OnInit {
   uf: UF;
   media: number;
 
-  constructor(private ufService: UFService, private samuService: SamuService,
-    private router: Router) { }
+  constructor(private ufService: UFService, private samuService: SamuService) { }
 
   ngOnInit(): void {
     this.ufService.getPorId(13)
       .then(uf => this.uf = uf)
       .then(uf => this.samuService.getPorUFMunicipiosAtendidosPorEstado(uf))
       .then(dados => this.media = this.calcularMedia(dados));
-  }
-
-  verDados(): void {
-    this.router.navigate(['/dados']);
   }
 
   calcularMedia(dados: Dados[]): number {
