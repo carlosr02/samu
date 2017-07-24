@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
+
 
 import { AppRoutingModule } from  './app-routing.module'
+
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService }  from './services/in-memory-uf-api.service';
 
 import { AppComponent } from './app.component';
 import { ResumoComponent } from './resumo/resumo.component';
@@ -20,7 +25,9 @@ import { SamuService } from './services/samu.service';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpModule,
+    InMemoryWebApiModule.forRoot(InMemoryDataService),
   ],
   providers: [ UFService, SamuService ],
   bootstrap: [ AppComponent ]

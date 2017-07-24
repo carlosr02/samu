@@ -1,12 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable }    from '@angular/core';
+import { Headers, Http } from '@angular/http';
+
+import 'rxjs/add/operator/toPromise';
 
 import { UF } from '../types/uf';
-import { UFs } from './mock-ufs';
 
 @Injectable()
 export class UFService {
+  private ufsUrl = 'api/ufs';
+
+  constructor(private http: Http) { }
+
   getAll(): Promise<UF[]> {
-    return Promise.resolve(UFs);
+    return this.http.get(this.ufsUrl)
+               .toPromise()
+               .then(response => response.json().data as UF[]);
   }
 
   getPorId(id: number): Promise<UF> {

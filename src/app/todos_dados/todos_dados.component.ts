@@ -13,12 +13,15 @@ import { SamuService } from '../services/samu.service';
   styleUrls: ['./todos_dados.component.css']
 })
 export class TodosDadosComponent implements OnInit {
-  atendimentos: Atendimentos[] = [];
+  // atendimentos: Atendimentos[] = [];
+  atendimentos: Dados[] = [];
 
   constructor(private samuService: SamuService, private location: Location) { }
 
   ngOnInit() : void {
-    this.samuService.getAllMunicipiosAtendidosPorEstadoComNome()
+    // this.samuService.getAllMunicipiosAtendidosPorEstadoComNome()
+    //   .then(atendimentos => this.atendimentos = atendimentos);
+    this.samuService.getAllMunicipiosAtendidosPorEstado()
       .then(atendimentos => this.atendimentos = atendimentos);
   }
 
