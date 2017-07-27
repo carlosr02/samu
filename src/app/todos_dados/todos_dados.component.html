@@ -1,5 +1,5 @@
 <ul>
   <li *ngFor="let atendimento of atendimentos">
-    <b>UF:</b>  <b>Ano:</b> {{atendimento.ano}} <b>Quantidade:</b> {{atendimento.valor}}
+    <b>UF:</b> {{atendimento.uf.nome}} <b>Ano:</b> {{atendimento.ano}} <b>Quantidade:</b> {{atendimento.valor}}
   </li>
 </ul>

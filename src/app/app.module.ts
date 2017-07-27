@@ -27,7 +27,7 @@ import { SamuService } from './services/samu.service';
     BrowserModule,
     AppRoutingModule,
     HttpModule,
-    InMemoryWebApiModule.forRoot(InMemoryDataService),
+    InMemoryWebApiModule.forRoot(InMemoryDataService, {passThruUnknownUrl: true}),
   ],
   providers: [ UFService, SamuService ],
   bootstrap: [ AppComponent ]

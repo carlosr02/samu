@@ -11,15 +11,21 @@ import { UFService } from '../services/uf.service';
 
 @Injectable()
 export class SamuService {
-  private samuUrl = "http://api.pgi.gov.br/api/1/serie/27.json";
+  // private samuUrl = 'https://crossorigin.me/http://api.pgi.gov.br/api/1/serie/27.json';
+  private samuUrl = '/api/valores'
 
   constructor(private http: Http, private ufService: UFService){ }
 
   getAllMunicipiosAtendidosPorEstado(): Promise<Dados[]> {
     return this.http.get(this.samuUrl)
                .toPromise()
-               .then((response) =>
-                 response.json().data.valores as Dados[]);
+               .then(response => response.json().data as Dados[]);
+  }
+
+  private getHeaders(){
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+    return headers;
   }
 
   getPorUFMunicipiosAtendidosPorEstado(uf: UF): Promise<Dados[]> {
