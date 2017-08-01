@@ -2,7 +2,7 @@ import { UF } from './uf';
 
 export class Dados {
     valor: number;
-    uf_id: number;
+    estado_ibge: number;
     ano: number;
 }
 

@@ -11,15 +11,14 @@ import { UFService } from '../services/uf.service';
 
 @Injectable()
 export class SamuService {
-  // private samuUrl = 'https://crossorigin.me/http://api.pgi.gov.br/api/1/serie/27.json';
-  private samuUrl = '/api/valores'
+  private samuUrl = 'https://samu.restlet.net/v1/valores/samu.json';
 
   constructor(private http: Http, private ufService: UFService){ }
 
   getAllMunicipiosAtendidosPorEstado(): Promise<Dados[]> {
     return this.http.get(this.samuUrl)
                .toPromise()
-               .then(response => response.json().data as Dados[]);
+               .then(response => response.json().valores as Dados[]);
   }
 
   private getHeaders(){
@@ -30,7 +29,7 @@ export class SamuService {
 
   getPorUFMunicipiosAtendidosPorEstado(uf: UF): Promise<Dados[]> {
     return this.getAllMunicipiosAtendidosPorEstado()
-        .then(municipios => municipios.filter(mun => mun.uf_id === uf.id));
+        .then(municipios => municipios.filter(mun => mun.estado_ibge === uf.id));
   }
 
   getAllMunicipiosAtendidosPorEstadoComNome(): Promise<Atendimentos[]> {
@@ -39,10 +38,10 @@ export class SamuService {
     this.getAllMunicipiosAtendidosPorEstado()
       .then(municipios => municipios
         .forEach(municipio =>
-          this.ufService.getPorId(municipio.uf_id).then(uf =>
+          this.ufService.getPorId(municipio.estado_ibge).then(uf =>
             atendimentos.push(new Atendimentos(municipio.valor, uf, municipio.ano)))
-        )
-      );
+          )
+        );
 
     return Promise.resolve(atendimentos);
   }
